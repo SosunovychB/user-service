@@ -2,11 +2,14 @@ package sosunovych.user.registration.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sosunovych.user.registration.dto.RegisterUserRequestDto;
+import sosunovych.user.registration.dto.UpdateUserContactInfoRequestDto;
 import sosunovych.user.registration.dto.UserDto;
 import sosunovych.user.registration.exception.EmailExistsException;
+import sosunovych.user.registration.exception.EntityNotFoundException;
 import sosunovych.user.registration.exception.YearInputException;
 import sosunovych.user.registration.mapper.UserMapper;
 import sosunovych.user.registration.model.User;
@@ -40,9 +43,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto updateUserContactInfo(int userId, UpdateUserContactInfoRequestDto requestDto) {
+        User user = getUserById(userId);
+        User updatedUser = userMapper.updateUserContactInfo(user, requestDto);
+        return userMapper.entityToUserDto(updatedUser);
+    }
+
+    @Override
     public void deleteUserById(int userId) {
-        int userPosition = userId - 1;
-        userRepositoryList.get(userPosition).setDeleted(true);
+        getUserById(userId).setDeleted(true);
     }
 
     private void checkIfEmailIsUnique(String email) {
@@ -77,5 +86,14 @@ public class UserServiceImpl implements UserService {
         if (toYear != null && fromYear != null && toYear < fromYear) {
             throw new YearInputException("'fromYear' value must be equal or less than 'toYear'");
         }
+    }
+
+    private User getUserById(int userId) {
+        Optional<User> userOptionalById = userRepositoryList.stream()
+                .filter(user -> user.getUserId() == userId)
+                .findAny();
+        return userOptionalById.orElseThrow(
+                () -> new EntityNotFoundException("User with id " + userId + " was not found.")
+        );
     }
 }
