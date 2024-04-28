@@ -1,5 +1,7 @@
 package sosunovych.user.registration.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import sosunovych.user.registration.dto.UpdateUserContactInfoRequestDto;
 import sosunovych.user.registration.dto.UserDto;
 import sosunovych.user.registration.service.UserService;
 
+@Tag(name = "User management", description = "Endpoints for managing users")
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -27,6 +30,8 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Search users by birth years",
+            description = "Search users by birth years")
     public List<UserDto> searchUsers(@RequestParam(required = false) Integer fromYear,
                                      @RequestParam(required = false) Integer toYear) {
         return userService.searchUsers(fromYear, toYear);
@@ -34,6 +39,8 @@ public class UserController {
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update full user info by id",
+            description = "Update full user info by id")
     public UserDto updateFullUserInfo(@PathVariable int userId,
             @Valid @RequestBody UpdateFullUserInfoRequestDto updateFullUserInfoRequestDto) {
         return userService.updateFullUserInfo(userId, updateFullUserInfoRequestDto);
@@ -41,6 +48,8 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update user contact info by id",
+            description = "Update user contact info by id")
     public UserDto updateUserContactInfo(@PathVariable int userId,
             @RequestBody UpdateUserContactInfoRequestDto requestDto) {
         return userService.updateUserContactInfo(userId, requestDto);
@@ -48,6 +57,8 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete user by id",
+            description = "Delete user by id")
     public void deleteUserById(@PathVariable int userId) {
         userService.deleteUserById(userId);
     }
