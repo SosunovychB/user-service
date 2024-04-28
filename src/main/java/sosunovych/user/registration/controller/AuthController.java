@@ -1,5 +1,7 @@
 package sosunovych.user.registration.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import sosunovych.user.registration.dto.RegisterUserRequestDto;
 import sosunovych.user.registration.dto.UserDto;
 import sosunovych.user.registration.service.UserService;
 
+@Tag(name = "Auth management", description = "Endpoint for registration")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -20,6 +23,8 @@ public class AuthController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Endpoint for registration",
+            description = "Endpoint for registration")
     public UserDto registerNewUser(
             @Valid @RequestBody RegisterUserRequestDto registerUserRequestDto) {
         return userService.registerNewUser(registerUserRequestDto);
