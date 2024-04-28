@@ -10,5 +10,6 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
-    //other fields were not included in UserDto, because they have sensitive info
+    private String address;
+    private String phoneNumber;
 }
