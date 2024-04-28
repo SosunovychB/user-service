@@ -12,4 +12,5 @@ public class User {
     private LocalDate birthDate;
     private String address;
     private String phoneNumber;
+    private boolean isDeleted = false;
 }

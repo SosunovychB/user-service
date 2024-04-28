@@ -31,11 +31,18 @@ public class UserServiceImpl implements UserService {
         return userRepositoryList.stream()
                 .filter(user -> {
                     int userBirthYear = user.getBirthDate().getYear();
-                    return (fromYear == null || userBirthYear >= fromYear)
+                    return !user.isDeleted()
+                            && (fromYear == null || userBirthYear >= fromYear)
                             && (toYear == null || userBirthYear <= toYear);
                 })
                 .map(userMapper::entityToUserDto)
                 .toList();
+    }
+
+    @Override
+    public void deleteUserById(int userId) {
+        int userPosition = userId - 1;
+        userRepositoryList.get(userPosition).setDeleted(true);
     }
 
     private void checkIfEmailIsUnique(String email) {

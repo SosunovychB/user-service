@@ -8,4 +8,6 @@ public interface UserService {
     UserDto registerNewUser(RegisterUserRequestDto registerUserRequestDto);
 
     List<UserDto> searchUsers(Integer fromYear, Integer toYear);
+
+    void deleteUserById(int userId);
 }
