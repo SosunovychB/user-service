@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sosunovych.user.registration.dto.RegisterUserRequestDto;
+import sosunovych.user.registration.dto.UpdateFullUserInfoRequestDto;
 import sosunovych.user.registration.dto.UpdateUserContactInfoRequestDto;
 import sosunovych.user.registration.dto.UserDto;
 import sosunovych.user.registration.exception.EmailExistsException;
@@ -43,9 +44,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto updateFullUserInfo(int userId, UpdateFullUserInfoRequestDto requestDto) {
+        User userById = getUserById(userId);
+        checkIfEmailIsUnique(requestDto.getEmail());
+        User updatedUser = userMapper.updateFullUserInfo(userById, requestDto);
+        return userMapper.entityToUserDto(updatedUser);
+    }
+
+    @Override
     public UserDto updateUserContactInfo(int userId, UpdateUserContactInfoRequestDto requestDto) {
-        User user = getUserById(userId);
-        User updatedUser = userMapper.updateUserContactInfo(user, requestDto);
+        User userById = getUserById(userId);
+        User updatedUser = userMapper.updateUserContactInfo(userById, requestDto);
         return userMapper.entityToUserDto(updatedUser);
     }
 
