@@ -9,28 +9,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import sosunovych.user.registration.dto.RegisterUserRequestDto;
 import sosunovych.user.registration.dto.UserDto;
 import sosunovych.user.registration.service.UserService;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(AuthController.class)
 public class AuthControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
     private ObjectMapper objectMapper;
-
     @MockBean
     private UserService userService;
 
     @Test
-    @DisplayName("Verify getAllCars() method works")
+    @DisplayName("Register new user")
     public void registerNewUser_ValidRequest_ReturnJsonUserDto() throws Exception {
         //given
         RegisterUserRequestDto requestDto = new RegisterUserRequestDto();
