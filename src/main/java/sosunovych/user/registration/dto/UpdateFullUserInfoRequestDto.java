@@ -2,10 +2,12 @@ package sosunovych.user.registration.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import sosunovych.user.registration.validation.birth.date.BirthDate;
 import sosunovych.user.registration.validation.email.Email;
 
 @Data
+@Accessors(chain = true)
 public class UpdateFullUserInfoRequestDto {
     @Email
     private String email;
