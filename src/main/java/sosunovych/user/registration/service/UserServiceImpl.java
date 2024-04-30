@@ -19,7 +19,7 @@ import sosunovych.user.registration.model.User;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     //Mock of a data persistence layer
-    private final List<User> userRepositoryList = new ArrayList<>();
+    static final List<User> userRepositoryList = new ArrayList<>();
     private final UserMapper userMapper;
 
     @Override
@@ -82,17 +82,12 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkIfInputYearsAreValid(Integer fromYear, Integer toYear) {
-        if (fromYear != null && fromYear < 0) {
-            throw new YearInputException("Invalid value 'fromYear' " + fromYear
-                    + ". It can not be negative.");
+        if (fromYear != null && toYear != null && (fromYear < 0 || toYear < 0)) {
+            throw new YearInputException("Values 'fromYear' and/or 'toYear' "
+                    + "can not be negative.");
         }
 
-        if (toYear != null && toYear < 0) {
-            throw new YearInputException("Invalid value 'toYear' " + toYear
-                    + ". It can not be negative.");
-        }
-
-        if (toYear != null && fromYear != null && toYear < fromYear) {
+        if (fromYear != null && toYear != null && (toYear < fromYear)) {
             throw new YearInputException("'fromYear' value must be equal or less than 'toYear'");
         }
     }
