@@ -35,22 +35,22 @@ public class AuthControllerTest {
     @DisplayName("Register new user")
     public void registerNewUser_ValidRequest_ReturnJsonUserDto() throws Exception {
         //given
-        RegisterUserRequestDto requestDto = new RegisterUserRequestDto();
-        requestDto.setEmail("test@example.com");
-        requestDto.setFirstName("Name");
-        requestDto.setLastName("LastName");
-        requestDto.setBirthDate("2000-01-01");
-        requestDto.setAddress("Address");
-        requestDto.setPhoneNumber("1234567890");
+        RegisterUserRequestDto requestDto = new RegisterUserRequestDto()
+                .setEmail("test@example.com")
+                .setFirstName("Name")
+                .setLastName("LastName")
+                .setBirthDate("2000-01-01")
+                .setAddress("Address")
+                .setPhoneNumber("1234567890");
 
-        UserDto userDto = new UserDto();
-        userDto.setUserId(1);
-        userDto.setEmail(requestDto.getEmail());
-        userDto.setFirstName(requestDto.getFirstName());
-        userDto.setLastName(requestDto.getLastName());
-        userDto.setBirthDate(LocalDate.parse(requestDto.getBirthDate()));
-        userDto.setAddress(requestDto.getAddress());
-        userDto.setPhoneNumber(requestDto.getPhoneNumber());
+        UserDto userDto = new UserDto()
+                .setUserId(1)
+                .setEmail(requestDto.getEmail())
+                .setFirstName(requestDto.getFirstName())
+                .setLastName(requestDto.getLastName())
+                .setBirthDate(LocalDate.parse(requestDto.getBirthDate()))
+                .setAddress(requestDto.getAddress())
+                .setPhoneNumber(requestDto.getPhoneNumber());
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
